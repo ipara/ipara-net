@@ -20,7 +20,7 @@ iPara servislerini kullanabilmek için [iPara'ya](https://www.ipara.com.tr) üye
 
 ## Önemli Uyarı:
 
-iPara örnek projelerinin amacı, yazılım geliştiricilere iPara servislerine entegre olabilecek bir proje örneği sunmak ve entegrasyon adımlarını daha iyi sağlamak amaçlıdır. Şu an için projelerin doğrudan canlı ortamınıza alarak kod değişimi yapmadan kullanmanız için desteğimiz bulunmamaktadır. **Projeyi bir eğitsel kaynak olarak / tutorial olarak kullanınız.**
+iPara örnek projelerinin amacı, yazılım geliştiricilere iPara servislerine entegre olabilecek bir proje örneği sunmak ve entegrasyon adımlarının daha iyi anlaşılmasını sağlamaktır. Projeleri doğrudan canlı ortamınıza alarak kod değişimi yapmadan kullanmanız için desteğimiz bulunmamaktadır. **Projeyi bir eğitsel kaynak (tutorial) olarak kullanınız.**
 
 ## Test Kartları
 
