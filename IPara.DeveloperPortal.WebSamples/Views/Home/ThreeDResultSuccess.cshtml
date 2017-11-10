@@ -1,4 +1,6 @@
-﻿@using Newtonsoft.Json
+﻿@using System.Xml.Linq
+@using IPara.DeveloperPortal.Core
+@using Newtonsoft.Json
 
 @model IPara.DeveloperPortal.Core.Response.ThreeDPaymentCompleteResponse
 
@@ -11,5 +13,12 @@
 
 <br />
 <pre>
-    @Html.Raw(JsonConvert.SerializeObject(Model, Formatting.Indented))
+        @{
+             if (Model!=null)
+        {
+             string formatted = XDocument.Parse(XmlBuilder.GetXMLFromObject(Model)).ToString();
+               @Html.Raw(Html.Encode(formatted));
+        }
+     
+            }
 </pre>

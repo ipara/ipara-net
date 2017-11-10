@@ -16,8 +16,32 @@ namespace IPara.DeveloperPortal.Core
     /// </summary>
     public class XmlBuilder
     {
-    
-   
+
+        public static string GetXMLFromObject(object o)
+        {
+            StringWriter sw = new StringWriter();
+            XmlTextWriter tw = null;
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(o.GetType());
+                tw = new XmlTextWriter(sw);
+                serializer.Serialize(tw, o);
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+            finally
+            {
+                sw.Close();
+                if (tw != null)
+                {
+                    tw.Close();
+                }
+            }
+            return sw.ToString();
+        }
+
         public static StringContent SerializeToXMLString(BaseRequest request)
         {
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
