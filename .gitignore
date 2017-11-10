@@ -5,5 +5,5 @@
 *.suo
 */packages
 **/packages
-*/.vs
+.vs
 **/config
