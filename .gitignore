@@ -5,4 +5,4 @@
 *.suo
 */packages
 **/packages
-
+*/.vs
