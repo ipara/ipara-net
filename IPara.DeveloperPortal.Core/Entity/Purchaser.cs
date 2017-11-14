@@ -6,6 +6,10 @@ using System.Xml.Serialization;
 
 namespace IPara.DeveloperPortal.Core.Entity
 {
+    /// <summary>
+    /// Bu sınıf 3D secure olmadan ödeme kısmında müşteri bilgilerinin kullanılacağı yerde ve
+    ///  3D Secure ile Ödeme'nin 2. adımında müşteri bilgilerinin istendiği yerde kullanılır.
+    /// </summary>
     [XmlRoot("purchaser")]
     public class Purchaser
     {

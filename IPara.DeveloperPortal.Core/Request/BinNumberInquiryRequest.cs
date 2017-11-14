@@ -10,9 +10,17 @@ namespace IPara.DeveloperPortal.Core.Request
 {
     public class BinNumberInquiryRequest :BaseRequest
     {
+        /// <summary>
+        /// Bin Sorgulama servisleri içerisinde kullanılacak olan bin numarasını temsil eder.
+        /// </summary>
         public string binNumber { get; set; }
-   
 
+        /// <summary>
+        /// Türkiye genelinde tanımlı olan tüm yerli kartlara ait BIN numaraları için sorgulama yapılmasına izin veren servisi temsil eder. 
+        /// </summary>
+        /// <param name="request">Istek olarak gelen bin numarasını temsil etmektedir.</param>
+        /// <param name="options">Kullanıcıya özel olarak belirlenen ayarları temsil eder.</param>
+        /// <returns></returns>
         public static BinNumberInquiryResponse Execute(BinNumberInquiryRequest request, Settings options)
         {
             options.transactionDate = Helper.GetTransactionDateString();

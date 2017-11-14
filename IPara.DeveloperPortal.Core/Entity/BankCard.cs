@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace IPara.DeveloperPortal.Core.Entity
 {
+    /// <summary>
+    /// Bu sınıf cüzdana kart ekleme servisi isteği sonucunda ve cüzdandaki kartları getir isteği sonucunda bize döndürülen 
+    /// alanları temsil etmektedir. 
+    /// </summary>
     public class BankCard 
     {
         public string cardId { get; set; }

@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace IPara.DeveloperPortal.Core.Response
 {
-   public class BankCardCreateResponse:BaseResponse
+    /// <summary>
+    /// Cüzdana kart ekleme servis çıktı parametre alanlarını temsil eder.
+    /// </summary>
+    public class BankCardCreateResponse:BaseResponse
     {
         public string cardId { get; set; }
 

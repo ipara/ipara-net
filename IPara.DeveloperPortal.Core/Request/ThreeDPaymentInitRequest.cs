@@ -12,7 +12,9 @@ namespace IPara.DeveloperPortal.Core.Request
     [XmlRoot("auth")]
     public class ThreeDPaymentInitRequest : BaseRequest
     {
-
+        /// <summary>
+        /// 3D Ödeme Formu başlatmak için gerekli olan servis girdi parametrelerini temsil eder. 
+        /// </summary>
         [XmlElement("orderId")]
         public string OrderId { get; set; }
 
@@ -43,11 +45,8 @@ namespace IPara.DeveloperPortal.Core.Request
 
         [XmlElement("purchaserName")]
         public string PurchaserName { get; set; }
-
         [XmlElement("purchaserSurname")]
         public string PurchaserSurname { get; set; }
-
-
         [XmlElement("purchaserEmail")]
         public string PurchaserEmail { get; set; }
         [XmlElement("successUrl")]
@@ -74,7 +73,6 @@ namespace IPara.DeveloperPortal.Core.Request
         public static string CreateThreeDPaymentForm(ThreeDPaymentInitRequest request, Settings options)
         {
             StringBuilder builder = new StringBuilder();
-
             builder.Append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">");
             builder.Append("<html>");
             builder.Append("<body>");
@@ -116,6 +114,13 @@ namespace IPara.DeveloperPortal.Core.Request
             builder.Append("</html>");
              return builder.ToString();
         }
+
+        /// <summary>
+        /// 3D secure 1. Adımında kullanıcı bilgileri alındıktan sonra ilgili servis isteğini temsil eder. 
+        /// </summary>
+        /// <param name="request">3D secure 1. Adımında gerekli olan servis girdi parametrelerini temsil eder.</param>
+        /// <param name="options">Kullanıcıya özel olarak belirlenen ayarları temsil eder.</param>
+        /// <returns></returns>
         public static string Execute(ThreeDPaymentInitRequest request, Settings options)
         {
             request.TransactionDate = Helper.GetTransactionDateString();

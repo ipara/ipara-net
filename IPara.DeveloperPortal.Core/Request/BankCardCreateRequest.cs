@@ -8,6 +8,9 @@ using IPara.DeveloperPortal.Core.Response;
 
 namespace IPara.DeveloperPortal.Core.Request
 {
+    /// <summary>
+    /// Cüzdana kart ekleme servisi içerisinde kullanılacak alanları temsil etmektedir.
+    /// </summary>
     public class BankCardCreateRequest : BaseRequest
     {
         public string userId { get; set; }
@@ -22,7 +25,13 @@ namespace IPara.DeveloperPortal.Core.Request
 
         public string clientIp { get; set; }
 
-
+      /// <summary>
+      /// Cüzdana kart ekleme istek metodur. Bu metod çeşitli kart bilgilerini ve settings sınıfı içerisinde bize özel olarak oluşan alanları kullanarak
+      /// cüzdana bir kartı kaydetmemizi sağlar.
+      /// </summary>
+      /// <param name="request">Cüzdana kart eklemek için gerekli olan girdilerin olduğu sınıfı temsil eder.</param>
+      /// <param name="options">Kullanıcıya özel olarak belirlenen ayarları temsil eder.</param>
+      /// <returns></returns>
         public static BankCardCreateResponse Execute(BankCardCreateRequest request, Settings options)
         {
             options.transactionDate = Helper.GetTransactionDateString();

@@ -6,6 +6,9 @@ using System.Xml.Serialization;
 
 namespace IPara.DeveloperPortal.Core.Entity
 {
+    /// <summary>
+    /// Bu sınıf 3D Secure ile Ödeme işlemlerinin 1. ve 2. adımında kullanılan parametreleri temsil eder.
+    /// </summary>
     [Serializable]
     [XmlRoot(ElementName = "auth")]
     public class IparaAuth

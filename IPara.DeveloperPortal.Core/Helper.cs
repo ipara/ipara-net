@@ -11,7 +11,13 @@ namespace IPara.DeveloperPortal.Core
 {
    public static class Helper
     {
-        //Constant sabitler
+       
+        /// <summary>
+        /// Constant sabitler
+        /// Aşağıdaki sabitler projenin her kısmında bu değişken isimleri ile çağırılmak zorundadır.
+        /// Bu değişkenler iPara'nın Request veya Response anında bizlerden beklediği alanları ifade eder.
+        /// Bu alanların kesinlikle değiştirilmemesi gereklidir.
+        /// </summary>
         private const string transactionDate = "transactionDate";
         private const string version = "version";
         private const string token = "token";
@@ -20,8 +26,9 @@ namespace IPara.DeveloperPortal.Core
         public const string application_json = "application/json";
 
         /// <summary>
-        /// Doğru formatta tarih döndüren yardımcı sınıftır. Isteklerde tarih istenen noktalarda bu fonksiyon sonucu
-        /// kullanılır. 
+        /// Doğru formatta tarih döndüren yardımcı sınıftır. Isteklerde tarih istenen noktalarda bu fonksiyon sonucu kullanılır. 
+        /// Servis çağrılarında kullanılacak istek zamanı için istenen tarih formatında bu fonksiyon kullanılmalıdır.
+        /// Bu fonksiyon verdiğimiz tarih değerini iPara'nın bizden beklemiş olduğu tarih formatına değiştirmektedir.
         /// </summary>
         /// <returns></returns>
         public static string GetTransactionDateString()
@@ -31,6 +38,10 @@ namespace IPara.DeveloperPortal.Core
 
         /// <summary>
         /// Çağrılarda kullanılacak Tokenları oluşturan yardımcı metotdur. 
+        /// İstek güvenlik bilgisi kullanılacak tüm çağrılarda token oluşturmamız gerekmektedir.
+        /// Token oluştururken hash bilgisi ve public key alanlarının parametre olarak gönderilmesi gerekmektedir.
+        /// hashstring alanı servise ait birden fazla alanın birleşmesi sonucu oluşan verileri ve public key mağaza açık anahtarını 
+        /// kullanarak bizlere token üretmemizi sağlar.
         /// </summary>
         /// <param name="publicKey">Mağaza Açık Anahtarınız</param>
         /// <param name="hashString">Servise özel bir çok alanın birleştirilmesiyle oluşturulan veriler bütünü</param>
@@ -47,7 +58,7 @@ namespace IPara.DeveloperPortal.Core
 
         /// <summary>
         /// Verilen string'i SHA1 ile hashleyip Base64 formatına çeviren fonksiyondur. 
-        /// CreateToken'dan farklı olarak token oluşturmaz sadece hassh hesaplar
+        /// CreateToken'dan farklı olarak token oluşturmaz sadece hash hesaplar
         /// </summary>
         /// <param name="hashString"></param>
         /// <returns></returns>

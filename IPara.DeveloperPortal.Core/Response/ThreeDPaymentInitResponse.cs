@@ -7,6 +7,9 @@ using System.Xml.Serialization;
 
 namespace IPara.DeveloperPortal.Core.Response
 {
+    /// <summary>
+    /// 3D secure 1. Adımı sonucunda oluşan servis çıktı parametrelerini temsil etmektedir.
+    /// </summary>
     [XmlRoot("authResponse")]
     public class ThreeDPaymentInitResponse : BaseResponse
     {

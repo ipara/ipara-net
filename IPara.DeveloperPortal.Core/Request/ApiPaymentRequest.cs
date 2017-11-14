@@ -9,6 +9,9 @@ using IPara.DeveloperPortal.Core.Response;
 
 namespace IPara.DeveloperPortal.Core.Request
 {
+    /// <summary>
+    /// 3D Secure Olmadan Ödeme için gerekli olan servis girdi parametrelerini temsil eder.
+    /// </summary>
     [XmlRoot("auth")]
     public class ApiPaymentRequest : BaseRequest
     {
@@ -57,6 +60,12 @@ namespace IPara.DeveloperPortal.Core.Request
 
         [XmlElement("purchaser")]
         public Purchaser Purchaser { get; set; }
+        /// <summary>
+        /// 3D Secure Olmadan Ödeme Servis çağrısını temsil eder.
+        /// </summary>
+        /// <param name="request">3D Secure olmadan gerekli olan servis girdi parametrelerini temsil eder.</param>
+        /// <param name="options">Kullanıcıya özel olarak belirlenen ayarları temsil eder.</param>
+        /// <returns></returns>
         public static ApiPaymentResponse Execute(ApiPaymentRequest request, Settings options)
         {
             options.transactionDate = Helper.GetTransactionDateString();

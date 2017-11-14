@@ -7,6 +7,9 @@ using System.Xml.Serialization;
 
 namespace IPara.DeveloperPortal.Core.Response
 {
+    /// <summary>
+    /// 3D secure olmadan ödeme servis çıktı parametre alanlarını temsil etmektedir.
+    /// </summary>
     [XmlRoot("authResponse")]
     public class ApiPaymentResponse:BaseResponse
     {

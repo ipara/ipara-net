@@ -14,6 +14,8 @@ namespace IPara.DeveloperPortal.Core
     }
     /// <summary>
     /// Tüm Request Sınıflarındaki Ortak Alanlar
+    /// Tüm Request Sınıflarında zorunlu olarak kullanılacak alanları temsil eder.
+    /// Ortak alanları tekrar tekrar kullanmak yerine bu sınıftan kalıtım alarak kullanım sağlanır.
     /// </summary>
     public class BaseRequest :Base
     {
@@ -22,8 +24,11 @@ namespace IPara.DeveloperPortal.Core
         [XmlElement("mode")]
         public string Mode { get; set; }
     }
+
     /// <summary>
     /// Tüm Response Sınıflarındaki Ortak Alanlar 
+    /// Tümn Response Sınıflarında zorunlu olarak kullanılacak alanları temsil eder.
+    /// Ortak olan bu alanları tekrar tekrar kullanmak yerine bu sınıftan kalıtım alarak kullanım sağlanır.
     /// </summary>
     public class BaseResponse:Base
     {

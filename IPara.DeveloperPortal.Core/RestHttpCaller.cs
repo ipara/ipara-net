@@ -28,8 +28,15 @@ namespace IPara.DeveloperPortal.Core
 
             return JsonConvert.DeserializeObject<T>(httpResponseMessage.Content.ReadAsStringAsync().Result);
         }
-       
-
+      
+        /// <summary>
+        /// Alanların Json olarak post edilmesine olanak sağlar.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="url"></param>
+        /// <param name="headers"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public T PostJson<T>(String url, WebHeaderCollection headers, BaseRequest request)
         {
             HttpClient httpClient = new HttpClient();
@@ -50,6 +57,15 @@ namespace IPara.DeveloperPortal.Core
             return JsonConvert.DeserializeObject<T>(httpResponseMessage.Content.ReadAsStringAsync().Result);
         }
 
+        /// <summary>
+        /// Xml olarak post edilmesi istenen istek sınıflarında gönderilen değerlerin xml olarak post edilmesine
+        /// imkan sağlayan metodu temsil eder.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="url"></param>
+        /// <param name="headers"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public T PostXML<T>(String url, WebHeaderCollection headers, BaseRequest request)
         {
             HttpClient httpClient = new HttpClient();

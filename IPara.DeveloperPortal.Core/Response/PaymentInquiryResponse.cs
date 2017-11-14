@@ -7,8 +7,10 @@ using System.Xml.Serialization;
 
 namespace IPara.DeveloperPortal.Core.Response
 {
+    /// <summary>
+    ///  Ödeme sorugulama servisi sonucunda oluşan servis çıktı parametrelerini temsil eder.
+    /// </summary>
     [XmlRoot("inquiryResponse")]
-
     public class PaymentInquiryResponse:BaseResponse
     {
         [XmlElement("amount")]

@@ -11,12 +11,35 @@ using Newtonsoft.Json;
 
 namespace IPara.DeveloperPortal.WebSamples.Controllers
 {
+
+    /// <summary>
+    /// Bu controller sizler için hazırlamış olduğumuz örnek web projesini temsil etmektedir.
+    /// Bu controller içerisinde iPara servislerine istek görderme ve gönderilen istekler sonucunda tarafınıza gelen cevapları
+    /// görebilirsiniz.
+
+    /// </summary>
     public class HomeController : BaseController
     {
+        /// <summary>
+        /// 3D ile ödeme 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
         }
+        /// <summary>
+        /// 3D ile ödeme Post işlemi
+        /// </summary>
+        /// <param name="nameSurname"></param>
+        /// <param name="cardNumber"></param>
+        /// <param name="cvc"></param>
+        /// <param name="month"></param>
+        /// <param name="year"></param>
+        /// <param name="userId"></param>
+        /// <param name="cardId"></param>
+        /// <param name="installment"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Index(string nameSurname, string cardNumber, string cvc, string month, string year, string userId, string cardId, string installment)
         {
@@ -53,6 +76,11 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
 
             return View();
         }
+
+        /// <summary>
+        /// 3D başarılı ise yönlendirilecek ve Ödemenin tamamlanacağı sayfayı temsil eder.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ThreeDResultSuccess()
         {
 
@@ -163,6 +191,10 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
 
 
         }
+        /// <summary>
+        /// 3D başarısız olursa başarısız olduğu sonucunun ekrana yazdırıldığı sayfayı temsil eder.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ThreeDResultFail()
         {
             ThreeDPaymentInitResponse response = new ThreeDPaymentInitResponse();
@@ -183,11 +215,20 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
                 response.Hash = Request.Form["hash"];
             return View(response);
         }
+
+        /// <summary>
+        /// Bin sorgulama sayfasını temsil eder.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult BinInqury()
         {
             return View();
         }
-
+        /// <summary>
+        /// Bin sorgulama sayfasından post edilen bin numarasının ilgili serviste işlenip sonucunun ekranda gösterildiği sayfayı temsil eder.
+        /// </summary>
+        /// <param name="binNumber"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult BinInqury(string binNumber)
         {
@@ -197,10 +238,24 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             return View(response);
         }
 
+        /// <summary>
+        /// Cüzdana kart ekleme sayfasını temsil eder.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult AddCardToWallet()
         {
             return View();
         }
+        /// <summary>
+        /// Cüzdana kart ekleme sayfasından post edilen değerlerle ilgili servise istek bilgisinin gönderilip sonucunun ekrana yazdırıldığı sayfayı temsil eder.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="nameSurname"></param>
+        /// <param name="cardNumber"></param>
+        /// <param name="cardAlias"></param>
+        /// <param name="month"></param>
+        /// <param name="year"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult AddCardToWallet(string userId, string nameSurname, string cardNumber, string cardAlias, string month, string year)
         {
@@ -215,10 +270,20 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             return View(BankCardCreateRequest.Execute(request, settings));
         }
 
+        /// <summary>
+        /// Cüzdandaki Kartları Listeleme sayfasını temsil eder.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetCardFromWallet()
         {
             return View();
         }
+        /// <summary>
+        /// Cüzdandaki Kartları Listele sayfasından post edilen değerlerle ilgili servise istek bilgisinin gönderilip sonucunun ekrana yazdırıldığı sayfayı temsil eder.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="cardId"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult GetCardFromWallet(string userId, string cardId)
         {
@@ -231,12 +296,21 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             return View(response);
         }
 
-
+        /// <summary>
+        /// Cüzdandaki kartları Silme sayfasını temsil eder.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult DeleteCardFromWallet()
         {
             return View();
         }
 
+        /// <summary>
+        /// Cüzdandaki kartları Silme sayfasından post edilen değerlerle ilgili servise istek bilgisinin gönderildiği sonucunun ekrana yazdırıldığı sayfayı temsil eder.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="cardId"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult DeleteCardFromWallet(string userId, string cardId)
         {
@@ -249,12 +323,22 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
         }
 
 
+        /// <summary>
+        /// Ödeme sorgulama sayfasını temsil eder.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult PaymentInqury()
         {
             return View();
         }
 
+        /// <summary>
+        /// ödeme sorgulama sonucu post edilen değerlerle ilgili servise istek bilgisinin gönderildiği sonucunun ekrana yazdırıldığı sayfayı temsil eder.
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
         [HttpPost]
+
         public ActionResult PaymentInqury(string orderId)
         {
             PaymentInquiryRequest request = new PaymentInquiryRequest();
@@ -265,11 +349,25 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             return View(response);
         }
 
+
+        /// <summary>
+        /// 3D olmadan ödeme sayfasını temsil eder.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ApiPayment()
         {
             return View();
         }
-
+        /// <summary>
+        /// 3D olmadan ödeme sayfasından post edilen değerlerle ilgili servise istek bilgisinin gönderildiği sonucunun ekrana yazdırıldığı sayfayı temsil eder.
+        /// </summary>
+        /// <param name="nameSurname"></param>
+        /// <param name="cardNumber"></param>
+        /// <param name="cvc"></param>
+        /// <param name="month"></param>
+        /// <param name="year"></param>
+        /// <param name="installment"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult ApiPayment(string nameSurname, string cardNumber, string cvc, string month, string year,string installment)
         {
@@ -357,11 +455,22 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             #endregion
         }
 
+        /// <summary>
+        /// Cüzdandaki kart ile ödeme sayfasını temsil eder.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ApiPaymentWithWallet()
         {
             return View();
         }
+        /// <summary>
+        /// Cüzdandaki kart sayfasından post edilen değerlerle ilgili servise istek bilgisinin gönderildiği sonucunun ekrana yazdırıldığı sayfayı temsil eder.
 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="cardId"></param>
+        /// <param name="installment"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult ApiPaymentWithWallet(string userId, string cardId, string installment)
         {

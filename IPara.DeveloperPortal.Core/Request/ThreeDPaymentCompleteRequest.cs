@@ -9,6 +9,9 @@ using IPara.DeveloperPortal.Core.Response;
 
 namespace IPara.DeveloperPortal.Core.Request
 {
+    /// <summary>
+    /// 3D Secure ile ödeme 2. Adımında gerekli olan 3D servis girdi parametrelerini temsil eder.
+    /// </summary>
     [XmlRoot("auth")]
     public class ThreeDPaymentCompleteRequest : BaseRequest
     {
@@ -57,6 +60,13 @@ namespace IPara.DeveloperPortal.Core.Request
 
         [XmlElement("purchaser")]
         public Purchaser Purchaser { get; set; }
+
+        /// <summary>
+        /// 3D Secure 2. Adımında ödeme onayı sağlanarak tahsilat gerçekleştirilmesi için gerekli olan servis isteğini temsil eder.
+        /// </summary>
+        /// <param name="request">Ödeme Onayı sağlamak için gerekli olan girdilerin olduğu sınıfı temsil eder.</param>
+        /// <param name="options">Kullanıcıya özel olarak belirlenen ayarları temsil eder.</param>
+        /// <returns></returns>
         public static ThreeDPaymentCompleteResponse Execute(ThreeDPaymentCompleteRequest request, Settings options)
         {
             options.transactionDate = Helper.GetTransactionDateString();
