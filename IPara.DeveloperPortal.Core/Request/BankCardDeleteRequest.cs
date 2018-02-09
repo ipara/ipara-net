@@ -26,8 +26,8 @@ namespace IPara.DeveloperPortal.Core.Request
         /// <returns></returns>
         public static BankCardDeleteResponse Execute(BankCardDeleteRequest request, Settings options)
         {
-            options.transactionDate = Helper.GetTransactionDateString();
-            options.HashString = options.PrivateKey + request.userId + request.cardId + request.clientIp + options.transactionDate;
+            options.TransactionDate = Helper.GetTransactionDateString();
+            options.HashString = options.PrivateKey + request.userId + request.cardId + request.clientIp + options.TransactionDate;
             return RestHttpCaller.Create()
                 .PostJson<BankCardDeleteResponse>(options.BaseUrl + "/bankcard/delete", Helper.GetHttpHeaders(options,Helper.application_json),
                     request);

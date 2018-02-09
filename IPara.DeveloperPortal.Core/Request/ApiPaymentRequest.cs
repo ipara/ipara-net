@@ -68,8 +68,8 @@ namespace IPara.DeveloperPortal.Core.Request
         /// <returns></returns>
         public static ApiPaymentResponse Execute(ApiPaymentRequest request, Settings options)
         {
-            options.transactionDate = Helper.GetTransactionDateString();
-            options.HashString = options.PrivateKey + request.OrderId + request.Amount + request.Mode + request.CardOwnerName + request.CardNumber + request.CardExpireMonth + request.CardExpireYear + request.Cvc + request.UserId + request.CardId+ request.Purchaser.Name + request.Purchaser.SurName + request.Purchaser.Email + options.transactionDate;
+            options.TransactionDate = Helper.GetTransactionDateString();
+            options.HashString = options.PrivateKey + request.OrderId + request.Amount + request.Mode + request.CardOwnerName + request.CardNumber + request.CardExpireMonth + request.CardExpireYear + request.Cvc + request.UserId + request.CardId+ request.Purchaser.Name + request.Purchaser.SurName + request.Purchaser.Email + options.TransactionDate;
             return RestHttpCaller.Create().PostXML<ApiPaymentResponse>(options.BaseUrl + "rest/payment/auth", Helper.GetHttpHeaders(options, Helper.application_xml), request);
         }
     }

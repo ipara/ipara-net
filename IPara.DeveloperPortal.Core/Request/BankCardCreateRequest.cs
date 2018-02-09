@@ -34,10 +34,10 @@ namespace IPara.DeveloperPortal.Core.Request
       /// <returns></returns>
         public static BankCardCreateResponse Execute(BankCardCreateRequest request, Settings options)
         {
-            options.transactionDate = Helper.GetTransactionDateString();
+            options.TransactionDate = Helper.GetTransactionDateString();
             options.HashString = options.PrivateKey + request.userId + request.cardOwnerName + request.cardNumber +
                                  request.cardExpireMonth + request.cardExpireYear + request.clientIp +
-                                 options.transactionDate;
+                                 options.TransactionDate;
             return RestHttpCaller.Create()
                 .PostJson<BankCardCreateResponse>(options.BaseUrl + "/bankcard/create", Helper.GetHttpHeaders(options,Helper.application_json),
                     request);

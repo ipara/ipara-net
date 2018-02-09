@@ -16,10 +16,10 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
     /// Bu controller sizler için hazırlamış olduğumuz örnek web projesini temsil etmektedir.
     /// Bu controller içerisinde iPara servislerine istek görderme ve gönderilen istekler sonucunda tarafınıza gelen cevapları
     /// görebilirsiniz.
-
     /// </summary>
     public class HomeController : BaseController
     {
+
         /// <summary>
         /// 3D ile ödeme 
         /// </summary>
@@ -28,6 +28,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
         {
             return View();
         }
+
         /// <summary>
         /// 3D ile ödeme Post işlemi
         /// </summary>
@@ -43,8 +44,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
         [HttpPost]
         public ActionResult Index(string nameSurname, string cardNumber, string cvc, string month, string year, string userId, string cardId, string installment)
         {
-            //3d iki aşamalı bir işlemdir. 
-            settings.BaseUrl = "https://www.ipara.com/3dgate"; // 3D ödemenin ilk adımında adres diğer tüm servislerden farklı olarak başka bir adrese gönderilmelidir. 
+            //3d iki aşamalı bir işlemdir. İlk adımda 3D güvenlik sorgulaması yapılmalıdır. 
 
             var request = new ThreeDPaymentInitRequest();
             request.OrderId = Guid.NewGuid().ToString();
@@ -101,7 +101,6 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             if (Request.Form["hash"] != null)
                 paymentResponse.Hash = Request.Form["hash"];
 
-
             if (Helper.Validate3DReturn(paymentResponse, settings))
             {
                 var request = new ThreeDPaymentCompleteRequest();
@@ -125,12 +124,10 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
                 request.Purchaser = new Purchaser();
                 request.Purchaser.BirthDate = "1986-07-11";
                 request.Purchaser.GsmPhone = "5881231212";
-                request.Purchaser.IdentityNumber = "1234567890";
-             
+                request.Purchaser.IdentityNumber = "1234567890";             
                 #endregion
 
                 #region Fatura bilgileri
-
                 request.Purchaser.InvoiceAddress = new PurchaserAddress();
                 request.Purchaser.InvoiceAddress.Name = "Murat";
                 request.Purchaser.InvoiceAddress.SurName = "Kaya";
@@ -143,11 +140,9 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
                 request.Purchaser.InvoiceAddress.TaxOffice = "Kozyatağı";
                 request.Purchaser.InvoiceAddress.CompanyName = "iPara";
                 request.Purchaser.InvoiceAddress.PhoneNumber = "2122222222";
-
                 #endregion
 
                 #region Kargo Adresi bilgileri
-
                 request.Purchaser.ShippingAddress = new PurchaserAddress();
                 request.Purchaser.ShippingAddress.Name = "Murat";
                 request.Purchaser.ShippingAddress.SurName = "Kaya";
@@ -157,11 +152,9 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
                 request.Purchaser.ShippingAddress.IdentityNumber = "1234567890";
                 request.Purchaser.ShippingAddress.CountryCode = "TR";
                 request.Purchaser.ShippingAddress.PhoneNumber = "2122222222";
-
                 #endregion
 
                 #region Ürün bilgileri
-
                 request.Products = new List<Product>();
                 Product p = new Product();
                 p.Title = "Telefon";
@@ -175,22 +168,19 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
                 p.Price = "5000";
                 p.Quantity = 1;
                 request.Products.Add(p);
-
                 #endregion
-
 
                 var response = ThreeDPaymentCompleteRequest.Execute(request, settings);
                 return View(response);
+
             }
             else
             {
                 return RedirectToAction("ThreeDResultFail");
             }
-
-
-
-
+            
         }
+
         /// <summary>
         /// 3D başarısız olursa başarısız olduğu sonucunun ekrana yazdırıldığı sayfayı temsil eder.
         /// </summary>
@@ -224,6 +214,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
         {
             return View();
         }
+
         /// <summary>
         /// Bin sorgulama sayfasından post edilen bin numarasının ilgili serviste işlenip sonucunun ekranda gösterildiği sayfayı temsil eder.
         /// </summary>
@@ -246,6 +237,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
         {
             return View();
         }
+
         /// <summary>
         /// Cüzdana kart ekleme sayfasından post edilen değerlerle ilgili servise istek bilgisinin gönderilip sonucunun ekrana yazdırıldığı sayfayı temsil eder.
         /// </summary>
@@ -278,6 +270,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
         {
             return View();
         }
+
         /// <summary>
         /// Cüzdandaki Kartları Listele sayfasından post edilen değerlerle ilgili servise istek bilgisinin gönderilip sonucunun ekrana yazdırıldığı sayfayı temsil eder.
         /// </summary>
@@ -321,8 +314,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             BankCardDeleteResponse response = BankCardDeleteRequest.Execute(request, settings);
             return View(response);
         }
-
-
+        
         /// <summary>
         /// Ödeme sorgulama sayfasını temsil eder.
         /// </summary>
@@ -348,8 +340,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             PaymentInquiryResponse response = PaymentInquiryRequest.Execute(request, settings);
             return View(response);
         }
-
-
+        
         /// <summary>
         /// 3D olmadan ödeme sayfasını temsil eder.
         /// </summary>
@@ -358,6 +349,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
         {
             return View();
         }
+
         /// <summary>
         /// 3D olmadan ödeme sayfasından post edilen değerlerle ilgili servise istek bilgisinin gönderildiği sonucunun ekrana yazdırıldığı sayfayı temsil eder.
         /// </summary>
@@ -463,9 +455,9 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
         {
             return View();
         }
+
         /// <summary>
         /// Cüzdandaki kart sayfasından post edilen değerlerle ilgili servise istek bilgisinin gönderildiği sonucunun ekrana yazdırıldığı sayfayı temsil eder.
-
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="cardId"></param>
@@ -475,7 +467,6 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
         public ActionResult ApiPaymentWithWallet(string userId, string cardId, string installment)
         {
             var request = new ApiPaymentRequest();
-
             #region Request New
             request.OrderId = Guid.NewGuid().ToString();
             request.Echo = "Echo"; // Cevap anında geri gelecek işlemi ayırt etmeye yarayacak alan
@@ -492,7 +483,6 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             request.UserId = userId;
 
             #endregion
-
             //Buradaki bilgilerin sizin tablolarınız veya ekranlarınızdan gelmesi gerekmektedir. 
             #region Sipariş veren bilgileri
             request.Purchaser = new Purchaser();
@@ -504,7 +494,6 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             request.Purchaser.IdentityNumber = "1234567890";
             request.Purchaser.ClientIp = "127.0.0.1";
             #endregion
-
             //Buradaki bilgilerin sizin tablolarınız veya ekranlarınızdan gelmesi gerekmektedir. 
             #region Fatura bilgileri
 

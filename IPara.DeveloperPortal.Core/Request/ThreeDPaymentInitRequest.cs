@@ -20,8 +20,10 @@ namespace IPara.DeveloperPortal.Core.Request
 
         [XmlElement("amount")]
         public string Amount { get; set; }
+
         [XmlElement("userId")]
         public string UserId { get; set; }
+
         [XmlElement("cardId")]
         public string CardId { get; set; }
 
@@ -45,20 +47,25 @@ namespace IPara.DeveloperPortal.Core.Request
 
         [XmlElement("purchaserName")]
         public string PurchaserName { get; set; }
+
         [XmlElement("purchaserSurname")]
         public string PurchaserSurname { get; set; }
+
         [XmlElement("purchaserEmail")]
         public string PurchaserEmail { get; set; }
+
         [XmlElement("successUrl")]
         public string SuccessUrl { get; set; }
+
         [XmlElement("failUrl")]
         public string FailUrl { get; set; }
-
-
+        
         [XmlElement("version")]
         public string Version { get; set; }
+
         [XmlElement("transactionDate")]
         public string TransactionDate { get; set; }
+
         [XmlElement("token")]
         public string Token { get; set; }
 
@@ -76,7 +83,7 @@ namespace IPara.DeveloperPortal.Core.Request
             builder.Append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">");
             builder.Append("<html>");
             builder.Append("<body>");
-            builder.Append("<form //action=\"" + options.BaseUrl + "\" method=\"post\" id=\"three_d_form\" >");
+            builder.Append("<form //action=\"" + options.ThreeDInquiryUrl + "\" method=\"post\" id=\"three_d_form\" >");
             builder.Append("<input type=\"hidden\" name=\"orderId\" value=\"" + request.OrderId + "\"/>");
             builder.Append("<input type=\"hidden\" name=\"amount\" value=\"" + request.Amount + "\"/>");
             builder.Append("<input type=\"hidden\" name=\"cardOwnerName\" value=\"" + request.CardOwnerName + "\"/>");
@@ -129,9 +136,6 @@ namespace IPara.DeveloperPortal.Core.Request
             return CreateThreeDPaymentForm(request, options);
         }
     }
-
-
-
 
 }
 

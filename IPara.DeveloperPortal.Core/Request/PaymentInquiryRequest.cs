@@ -25,8 +25,8 @@ namespace IPara.DeveloperPortal.Core.Request
         /// <returns></returns>
         public static PaymentInquiryResponse Execute(PaymentInquiryRequest request, Settings options)
         {
-            options.transactionDate = Helper.GetTransactionDateString();
-            options.HashString = options.PrivateKey + request.orderId +options.Mode + options.transactionDate;
+            options.TransactionDate = Helper.GetTransactionDateString();
+            options.HashString = options.PrivateKey + request.orderId +options.Mode + options.TransactionDate;
             return RestHttpCaller.Create().PostXML<PaymentInquiryResponse>(options.BaseUrl + "rest/payment/inquiry", Helper.GetHttpHeaders(options, Helper.application_xml), request);
         }
     }

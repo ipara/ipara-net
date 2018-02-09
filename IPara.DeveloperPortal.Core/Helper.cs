@@ -83,7 +83,7 @@ namespace IPara.DeveloperPortal.Core
             headers.Add(Accept, acceptType);
             headers.Add(version, settings.Version);
             headers.Add(token,CreateToken(settings.PublicKey,settings.HashString));
-            headers.Add(transactionDate, settings.transactionDate);
+            headers.Add(transactionDate, settings.TransactionDate);
 
             return headers;
         }

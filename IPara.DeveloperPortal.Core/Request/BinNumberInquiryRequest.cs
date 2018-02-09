@@ -23,8 +23,8 @@ namespace IPara.DeveloperPortal.Core.Request
         /// <returns></returns>
         public static BinNumberInquiryResponse Execute(BinNumberInquiryRequest request, Settings options)
         {
-            options.transactionDate = Helper.GetTransactionDateString();
-            options.HashString = options.PrivateKey + request.binNumber + options.transactionDate;
+            options.TransactionDate = Helper.GetTransactionDateString();
+            options.HashString = options.PrivateKey + request.binNumber + options.TransactionDate;
             return RestHttpCaller.Create().PostJson<BinNumberInquiryResponse>(options.BaseUrl + "rest/payment/bin/lookup", Helper.GetHttpHeaders( options, Helper.application_json), request);
         }
     }

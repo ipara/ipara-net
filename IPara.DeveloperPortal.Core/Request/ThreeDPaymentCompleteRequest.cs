@@ -69,8 +69,8 @@ namespace IPara.DeveloperPortal.Core.Request
         /// <returns></returns>
         public static ThreeDPaymentCompleteResponse Execute(ThreeDPaymentCompleteRequest request, Settings options)
         {
-            options.transactionDate = Helper.GetTransactionDateString();
-            options.HashString = options.PrivateKey + request.OrderId + request.Amount + request.Mode + request.ThreeDSecureCode + options.transactionDate;
+            options.TransactionDate = Helper.GetTransactionDateString();
+            options.HashString = options.PrivateKey + request.OrderId + request.Amount + request.Mode + request.ThreeDSecureCode + options.TransactionDate;
             return RestHttpCaller.Create().PostXML<ThreeDPaymentCompleteResponse>(options.BaseUrl + "rest/payment/auth", Helper.GetHttpHeaders(options, Helper.application_xml), request);
         }
     }
