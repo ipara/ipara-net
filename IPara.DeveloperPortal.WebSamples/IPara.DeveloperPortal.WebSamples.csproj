@@ -30,6 +30,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -190,6 +191,8 @@
   <ItemGroup>
     <None Include="Properties\PublishProfiles\File.pubxml" />
     <Content Include="Views\Home\ApiPaymentWithWallet.cshtml" />
+    <Content Include="Views\Home\Api3DPaymentInOneStep.cshtml" />
+    <Content Include="Views\Home\Api3DPaymentInOneStepResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IPara.DeveloperPortal.Core\IPara.DeveloperPortal.Core.csproj">

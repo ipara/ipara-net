@@ -66,8 +66,8 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             request.PurchaserSurname = "Kaya";
             request.PurchaserEmail = "murat@kaya.com";
 
-            request.SuccessUrl = Request.Url +"Home/ThreeDResultSuccess";
-            request.FailUrl = Request.Url+"Home/ThreeDResultFail";
+            request.SuccessUrl = Request.Url + "Home/ThreeDResultSuccess";
+            request.FailUrl = Request.Url + "Home/ThreeDResultFail";
 
             var form = ThreeDPaymentInitRequest.Execute(request, settings);
             System.Web.HttpContext.Current.Response.Clear();
@@ -124,7 +124,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
                 request.Purchaser = new Purchaser();
                 request.Purchaser.BirthDate = "1986-07-11";
                 request.Purchaser.GsmPhone = "5881231212";
-                request.Purchaser.IdentityNumber = "1234567890";             
+                request.Purchaser.IdentityNumber = "1234567890";
                 #endregion
 
                 #region Fatura bilgileri
@@ -178,7 +178,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             {
                 return RedirectToAction("ThreeDResultFail");
             }
-            
+
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             BankCardDeleteResponse response = BankCardDeleteRequest.Execute(request, settings);
             return View(response);
         }
-        
+
         /// <summary>
         /// Ödeme sorgulama sayfasını temsil eder.
         /// </summary>
@@ -340,7 +340,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             PaymentInquiryResponse response = PaymentInquiryRequest.Execute(request, settings);
             return View(response);
         }
-        
+
         /// <summary>
         /// 3D olmadan ödeme sayfasını temsil eder.
         /// </summary>
@@ -361,7 +361,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
         /// <param name="installment"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ApiPayment(string nameSurname, string cardNumber, string cvc, string month, string year,string installment)
+        public ActionResult ApiPayment(string nameSurname, string cardNumber, string cvc, string month, string year, string installment)
         {
             var request = new ApiPaymentRequest();
 
@@ -470,7 +470,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             #region Request New
             request.OrderId = Guid.NewGuid().ToString();
             request.Echo = "Echo"; // Cevap anında geri gelecek işlemi ayırt etmeye yarayacak alan
-            request.Mode = settings.Mode; 
+            request.Mode = settings.Mode;
             request.Amount = "10000"; // 100.00 tL
             request.CardOwnerName = "";
             request.CardNumber = "";
@@ -549,5 +549,105 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             #endregion
         }
 
+        /// <summary>
+        /// Tek adımda 3D ile ödeme 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Api3DPaymentInOneStep()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Tek adımda 3D ile ödeme Post işlemi
+        /// </summary>
+        /// <param name="nameSurname"></param>
+        /// <param name="cardNumber"></param>
+        /// <param name="cvc"></param>
+        /// <param name="month"></param>
+        /// <param name="year"></param>
+        /// <param name="userId"></param>
+        /// <param name="cardId"></param>
+        /// <param name="installment"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Api3DPaymentInOneStep(string nameSurname, string cardNumber, string cvc, string month, string year, string userId, string cardId, string installment)
+        {
+            var request = new Api3DPaymentInOneStepRequest();
+            request.OrderId = Guid.NewGuid().ToString();
+            request.Echo = "Echo";
+            request.Mode = settings.Mode;
+            request.Version = settings.Version;
+            request.Amount = "10000"; // 100 tL
+            request.CardOwnerName = nameSurname;
+            request.CardNumber = cardNumber;
+            request.CardExpireMonth = month;
+            request.CardExpireYear = year;
+            request.Installment = installment;
+            request.Cvc = cvc;
+            request.CardId = cardId;
+            request.UserId = userId;
+
+            request.Language = "tr-TR"; // ext
+            request.Purchaser = new Purchaser
+            {
+                Name = "Murat",
+                SurName = "Kaya",
+                Email = "murat@kaya.com",
+                ClientIp = "127.0.0.1",
+                BirthDate = "1980-07-29"
+            };
+
+            #region Ürün bilgileri
+
+            request.Products = new List<Product>();
+            Product p = new Product();
+            p.Title = "Telefon";
+            p.Code = "TLF0001";
+            p.Price = "5000";
+            p.Quantity = 1;
+            request.Products.Add(p);
+
+            p = new Product();
+            p.Title = "Bilgisayar";
+            p.Code = "BLG0001";
+            p.Price = "5000";
+            p.Quantity = 1;
+            request.Products.Add(p);
+            #endregion
+
+            request.SuccessUrl = Request.Url.Scheme + "://" + Request.Url.Authority + "/Home/Api3DPaymentInOneStepResult";
+            request.FailUrl = Request.Url.Scheme + "://" + Request.Url.Authority + "/Home/Api3DPaymentInOneStepResult";
+
+            var form = Api3DPaymentInOneStepRequest.Execute(request, settings);
+            System.Web.HttpContext.Current.Response.Clear();
+            System.Web.HttpContext.Current.Response.Write(form);
+            System.Web.HttpContext.Current.Response.End();
+
+            return View();
+        }
+
+
+        /// <summary>
+        /// Tek Adımda 3D ödeme sonucu yönlendirilecek sayfayı temsil eder. Başarılı ve başarısız cevaplar için ayrı ayrı sayfalar da oluşturulabilir.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Api3DPaymentInOneStepResult()
+        {
+            Api3DPaymentInOneStepResponse response = new Api3DPaymentInOneStepResponse();
+            response.Result = Request.Form["result"];
+            response.Amount = Request.Form["amount"];
+            response.CommissionRate= Request.Form["commissionRate"];
+            response.PublicKey = Request.Form["publicKey"];
+            response.OrderId = Request.Form["orderId"];
+            response.ErrorCode = Request.Form["errorCode"];
+            response.ErrorMessage = Request.Form["errorMessage"];
+            response.TransactionDate = Request.Form["transactionDate"];
+            response.ThreeDSecureCode = Request.Form["threeDSecureCode"];
+
+            return View(response);
+        }
     }
 }
+

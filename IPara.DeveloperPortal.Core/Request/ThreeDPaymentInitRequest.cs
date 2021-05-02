@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using IPara.DeveloperPortal.Core.Entity;
 using IPara.DeveloperPortal.Core.Response;
+using Newtonsoft.Json;
 
 namespace IPara.DeveloperPortal.Core.Request
 {
@@ -42,6 +43,7 @@ namespace IPara.DeveloperPortal.Core.Request
         [XmlElement("installment")]
         public string Installment { get; set; }
 
+        [JsonProperty("cardCvc")]
         [XmlElement("cardCvc")]
         public string Cvc { get; set; }
 
@@ -57,6 +59,7 @@ namespace IPara.DeveloperPortal.Core.Request
         [XmlElement("successUrl")]
         public string SuccessUrl { get; set; }
 
+        [JsonProperty("failureUrl")]
         [XmlElement("failUrl")]
         public string FailUrl { get; set; }
         
