@@ -193,6 +193,9 @@
     <Content Include="Views\Home\ApiPaymentWithWallet.cshtml" />
     <Content Include="Views\Home\Api3DPaymentInOneStep.cshtml" />
     <Content Include="Views\Home\Api3DPaymentInOneStepResult.cshtml" />
+    <Content Include="Views\Home\LinkPaymentCreate.cshtml" />
+    <Content Include="Views\Home\LinkPaymentList.cshtml" />
+    <Content Include="Views\Home\LinkPaymentDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IPara.DeveloperPortal.Core\IPara.DeveloperPortal.Core.csproj">

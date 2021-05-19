@@ -1,0 +1,104 @@
+﻿@using Newtonsoft.Json
+@model IPara.DeveloperPortal.Core.Response.LinkPaymentListResponse
+
+@{
+    ViewBag.Title = "Link İle Ödeme (Link Sorgulama/Listeleme)";
+
+    var moment = ViewBag.moment;
+    
+    var startDay =  moment.Day.ToString();
+    var endDay = startDay;
+    var startMonth = moment.Month.ToString();
+    var endMonth = startMonth;
+    var startYear = moment.Year.ToString();
+    var endYear = startYear;
+}
+
+<br />
+<br />
+<br />
+<br />
+
+<form action="" method="post" class="form-horizontal">
+    <fieldset>
+
+        <!-- Form Name -->
+        <legend>Link İle Ödeme (Link Sorgulama)</legend>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Müşteri Eposta : </label>
+            <div class="col-md-4">
+                <input type="text" name="email" value="mail@example.com" class="form-control input-md">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Müşteri Cep Telefonu : </label>
+            <div class="col-md-4">
+                <input type="text" name="gsm" class="form-control input-md">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Link Durumu : </label>
+            <div class="col-md-4">
+                <select name="linkState" class="form-control">
+                    <option value="-1">Seçiniz</option>
+                    <option value="0">Link İsteği Alındı</option>
+                    <option value="1">Link URL’i yaratıldı</option>
+                    <option value="2">Link Gönderildi, Ödeme Bekleniyor</option>
+                    <option value="3">Link ile Ödeme Başarılı</option>
+                    <option value="98">Link Zaman Aşımına Uğradı</option>
+                    <option value="99">Link Silindi</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Link Oluşturma Alanına Ait Arama Başlangıç Tarihi : </label>
+            <div class="col-md-4 form-inline">
+                <input type="text" name="startDay" value="@startDay" class="form-control input-md" style="width: 80px; text-align: center;" maxlength="2">
+                <input type="text" name="startMonth" value="@startMonth" class="form-control input-md" style="width: 80px; text-align: center;" maxlength="2">
+                <input type="text" name="startYear" value="@startYear" class="form-control input-md" style="width: 112px; text-align: center;" maxlength="4">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Link Oluşturma Alanına Ait Arama Bitiş Tarihi : </label>
+            <div class="col-md-4 form-inline">
+                <input type="text" name="endDay" value="@endDay" class="form-control input-md" style="width: 80px; text-align: center;" maxlength="2">
+                <input type="text" name="endMonth" value="@endMonth" class="form-control input-md" style="width: 80px; text-align: center;" maxlength="2">
+                <input type="text" name="endYear" value="@endYear" class="form-control input-md" style="width: 112px; text-align: center;" maxlength="4">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Toplam Gösterilebilecek Sayfa Sayısı * : </label>
+            <div class="col-md-4">
+                <select name="pageSize" class="form-control">
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Gösterilecek Sayfa Numarası * : </label>
+            <div class="col-md-4">
+                <input type="text" name="pageIndex" value="1" class="form-control input-md" required="required">
+            </div>
+        </div>
+        <!-- Button -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for=""></label>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success">Ödeme Linklerini Listele</button>
+            </div>
+        </div>
+
+    </fieldset>
+
+</form>
+
+<br />
+<pre>
+    @Html.Raw(JsonConvert.SerializeObject(Model, Formatting.Indented))
+</pre>

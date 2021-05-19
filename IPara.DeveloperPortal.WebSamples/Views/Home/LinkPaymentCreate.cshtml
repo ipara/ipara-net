@@ -1,0 +1,132 @@
+﻿@using Newtonsoft.Json
+@model IPara.DeveloperPortal.Core.Response.LinkPaymentCreateResponse
+
+@{
+    ViewBag.Title = "Link İle Ödeme (Link Gönderim)";
+    var moment = ViewBag.moment;
+    var day = moment.Day.ToString();
+    var month = moment.Month.ToString();
+    var year = moment.Year.ToString();
+}
+
+<br />
+<br />
+<br />
+<br />
+
+<form action="" method="post" class="form-horizontal">
+    <fieldset>
+
+        <legend>Link İle Ödeme (Link Gönderim)</legend>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Müşteri Adı * :</label>
+            <div class="col-md-4">
+                <input name="name" type="text" value="Müşteri Ad" class="form-control input-md" required="required">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Müşteri Soyadı * :</label>
+            <div class="col-md-4">
+                <input name="surname" type="text" value="Müşteri Soyad" class="form-control input-md" required="required">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Müşteri T.C. kimlik Numarası:</label>
+            <div class="col-md-4">
+                <input name="tcCertificate" type="text" value="" class="form-control input-md">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Müşteri vergi Numarası: </label>
+            <div class="col-md-4">
+                <input name="taxNumber" type="text" value="" class="form-control input-md">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Müşteri Eposta * : </label>
+            <div class="col-md-4">
+                <input name="email" type="text" value="mail@example.com" class="form-control input-md" required="required">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Müşteri Cep Telefonu * : </label>
+            <div class="col-md-4">
+                <input name="gsm" type="text" value="5881231212" class="form-control input-md" required="required">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Tahsil Edilecek Tutar (TL) * : </label>
+            <div class="col-md-4">
+                <input name="amount" type="text" value="1000" class="form-control input-md" required="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">3D Secure * : </label>
+            <div class="col-md-4">
+                <select name="threeD" class="form-control">
+                    <option value="true">Evet</option>
+                    <option value="false">Hayır</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Link Geçerlilik Süresi (Gün/Ay/Yıl) * : </label>
+            <div class="col-md-4 form-inline">
+                <input name="day" type="text" value="@day" class="form-control input-md" style="width: 80px; text-align: center;" maxlength="2" required="required">
+                <input name="month" type="text" value="@month" class="form-control input-md" style="width: 80px; text-align: center;" maxlength="2" required="required">
+                <input name="year" type="text" value="@year" class="form-control input-md" style="width: 112px; text-align: center;" maxlength="4" required="required">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Ödemenin Yapılabileceği Taksitlerin Listesi: </label>
+            <div class="col-md-4">
+                <select class="form-control" name="installmentList">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Müşteriye Bilgilendirme Mailli Gönder * : </label>
+            <div class="col-md-4">
+                <select name="sendEmail" class="form-control">
+                    <option value="true">Evet</option>
+                    <option value="false">Hayır</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="">Komisyon Kime Yansıtılacak : </label>
+            <div class="col-md-4">
+                <select name="commissionType" class="form-control">
+                    <option value="1">Satıcı (Varsayılan)</option>
+                    <option value="2">Müşteri</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for=""></label>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success">Ödeme Linki Oluştur</button>
+            </div>
+        </div>
+
+    </fieldset>
+
+</form>
+
+<br />
+<pre>
+    @Html.Raw(JsonConvert.SerializeObject(Model, Formatting.Indented))
+</pre>

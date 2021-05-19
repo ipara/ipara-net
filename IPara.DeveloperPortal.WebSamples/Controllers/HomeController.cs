@@ -648,6 +648,135 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
 
             return View(response);
         }
+
+        /// <summary>
+        /// Link İle Ödeme (Link Gönderim)
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LinkPaymentCreate()
+        {
+            ViewBag.moment = DateTime.Now;
+            return View();
+        }
+
+        /// <summary>
+        /// Link İle Ödeme (Link Gönderim)
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
+        /// <param name="tcCertificate"></param>
+        /// <param name="taxNumber"></param>
+        /// <param name="email"></param>
+        /// <param name="gsm"></param>
+        /// <param name="amount"></param>
+        /// <param name="threeD"></param>
+        /// <param name="day"></param>
+        /// <param name="month"></param>
+        /// <param name="year"></param>
+        /// <param name="installmentList"></param>
+        /// <param name="sendEmail"></param>
+        /// <param name="commissionType"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult LinkPaymentCreate(string name, string surname, string tcCertificate, string taxNumber, string email, string gsm, 
+            string amount, string threeD, string day, string month, string year, string installmentList, string sendEmail, string commissionType)
+        {
+            LinkPaymentCreateRequest request = new LinkPaymentCreateRequest();
+            request.name = name;
+            request.surname = surname;
+            request.tcCertificate = tcCertificate;
+            request.taxNumber = taxNumber;
+            request.email = email;
+            request.gsm = gsm;
+            request.amount = Convert.ToInt32(amount);
+            request.threeD = threeD;
+            request.expireDate = year + "-" + month + "-" + day + " 23:59:59"; // Link girilen günün sonuna kadar geçerli olacak.
+            int[] i = new int[1];
+            i[0] = Convert.ToInt32(installmentList);
+            request.installmentList = i; // Taksit listesi, dizi halinde gönderilebilir. Ödeme için kaç farklı taksit listelenmesi gerekiyorsa burada eklenebilir.
+            request.sendEmail = sendEmail;
+            request.commissionType = commissionType;
+            request.clientIp = "127.0.0.1";
+            LinkPaymentCreateResponse response = LinkPaymentCreateRequest.Execute(request, settings);
+            ViewBag.moment = DateTime.Now;
+
+            return View(response);
+        }
+
+        /// <summary>
+        /// Link İle Ödeme (Link Sorgulama/Listeleme)
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LinkPaymentList()
+        {
+            ViewBag.moment = DateTime.Now;
+            return View();
+        }
+
+        /// <summary>
+        /// Link İle Ödeme (Link Sorgulama/Listeleme)
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="gsm"></param>
+        /// <param name="linkState"></param>
+        /// <param name="startDay"></param>
+        /// <param name="startMonth"></param>
+        /// <param name="startYear"></param>
+        /// <param name="endDay"></param>
+        /// <param name="endMonth"></param>
+        /// <param name="endYear"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult LinkPaymentList(string email, string gsm, string linkState, string startDay, string startMonth, string startYear, string endDay, string endMonth, string endYear, string pageSize, string pageIndex)
+        {
+            LinkPaymentListRequest request = new LinkPaymentListRequest();
+            request.email = email;
+            request.gsm = gsm;
+            request.linkState = linkState != "-1" ? linkState : null;
+            if (!String.IsNullOrEmpty(startDay)) { // Eğer başlangıç tarihi girildiyse, bitiş tarihi de girilmelidir.
+                request.startDate = startYear + "-" + startMonth + "-" + startDay + " 00:00:00";
+                request.endDate = endYear + "-" + endMonth + "-" + endDay + " 23:59:59";
+            } else
+            {
+                request.startDate = null;
+                request.endDate = null;
+            }
+            
+            
+            request.pageSize = pageSize;
+            request.pageIndex = pageIndex;
+            request.clientIp = "127.0.0.1";
+
+            LinkPaymentListResponse response = LinkPaymentListRequest.Execute(request, settings);
+            ViewBag.moment = DateTime.Now;
+
+            return View(response);
+        }
+
+        /// <summary>
+        /// Link İle Ödeme (Link Silme)
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LinkPaymentDelete()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Link İle Ödeme (Link Silme)
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult LinkPaymentDelete(string linkId)
+        {
+            LinkPaymentDeleteRequest request = new LinkPaymentDeleteRequest();
+            request.linkId = linkId;
+            request.clientIp = "127.0.0.1";
+
+            BaseResponse response = LinkPaymentDeleteRequest.Execute(request, settings);
+            return View(response);
+        }
     }
 }
 
