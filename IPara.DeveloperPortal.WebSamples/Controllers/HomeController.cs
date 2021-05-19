@@ -777,6 +777,53 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             BaseResponse response = LinkPaymentDeleteRequest.Execute(request, settings);
             return View(response);
         }
+
+        /// <summary>
+        /// Cüzdandaki Karti ile 3D Ödeme 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Api3DPaymentWithWallet()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Cüzdandaki Kart ile 3D Ödeme Post işlemi
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="cardId"></param>
+        /// <param name="installment"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Api3DPaymentWithWallet(string userId, string cardId, string installment)
+        {
+            //3d iki aşamalı bir işlemdir. İlk adımda 3D güvenlik sorgulaması yapılmalıdır. 
+
+            var request = new ThreeDPaymentInitRequest();
+            request.OrderId = Guid.NewGuid().ToString();
+            request.Echo = "Echo";
+            request.Mode = settings.Mode;
+            request.Version = settings.Version;
+            request.Amount = "10000"; // 100 tL
+            request.Installment = installment;
+            request.CardId = cardId;
+            request.UserId = userId;
+
+
+            request.PurchaserName = "Murat";
+            request.PurchaserSurname = "Kaya";
+            request.PurchaserEmail = "murat@kaya.com";
+
+            request.SuccessUrl = Request.Url.Scheme + "://" + Request.Url.Authority + "/Home/ThreeDResultSuccess";
+            request.FailUrl = Request.Url.Scheme + "://" + Request.Url.Authority + "/Home/ThreeDResultFail";
+
+            var form = ThreeDPaymentInitRequest.Execute(request, settings);
+            System.Web.HttpContext.Current.Response.Clear();
+            System.Web.HttpContext.Current.Response.Write(form);
+            System.Web.HttpContext.Current.Response.End();
+
+            return View();
+        }
     }
 }
 

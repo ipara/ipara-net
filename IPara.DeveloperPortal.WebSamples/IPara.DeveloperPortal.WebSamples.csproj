@@ -151,7 +151,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Api3DPaymentWithWallet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -196,6 +196,7 @@
     <Content Include="Views\Home\LinkPaymentCreate.cshtml" />
     <Content Include="Views\Home\LinkPaymentList.cshtml" />
     <Content Include="Views\Home\LinkPaymentDelete.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IPara.DeveloperPortal.Core\IPara.DeveloperPortal.Core.csproj">

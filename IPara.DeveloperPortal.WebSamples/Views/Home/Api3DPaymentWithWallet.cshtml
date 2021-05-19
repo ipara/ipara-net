@@ -1,10 +1,5 @@
-﻿@using System.Xml.Linq
-@using IPara.DeveloperPortal.Core
-@using Newtonsoft.Json
-@model IPara.DeveloperPortal.Core.Response.ApiPaymentResponse
-
-@{
-    ViewBag.Title = "Tek Tıkla ile Ödeme";
+﻿@{
+    ViewBag.Title = "Tek Tıkla 3D Ödeme";
 }
 <br />
 <br />
@@ -96,9 +91,8 @@
     <label style="font-weight:bold;">Vergi Dairesi Adı :</label> Kozyatağı<br>
     <label style="font-weight:bold;">Firma Adı:</label> iPara
 </fieldset>
-<form action="" method="post" class="form-horizontal">
- 
 
+<form action="" method="post" class="form-horizontal">
     <fieldset>
         <legend><label style="font-weight:bold;width:250px;">Tek Tıkla Ödeme</label></legend>
         <div class="form-group">
@@ -138,19 +132,8 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for=""></label>
         <div class="col-md-4">
-            <button type="submit" id="" name="" class="btn btn-success">API Payment ile Ödeme</button>
+            <button type="submit" id="" name="" class="btn btn-success">API Payment ile 3D Ödeme</button>
         </div>
     </div>
 </form>
 
-<br />
-<pre>
-          @{
-        if (Model!=null)
-        {
-             string formatted = XDocument.Parse(XmlBuilder.GetXMLFromObject(Model)).ToString();
-               @Html.Raw(Html.Encode(formatted));
-        }
-     
-            }
-</pre>
