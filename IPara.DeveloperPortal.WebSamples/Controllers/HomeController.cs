@@ -66,8 +66,8 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             request.PurchaserSurname = "Kaya";
             request.PurchaserEmail = "murat@kaya.com";
 
-            request.SuccessUrl = Request.Url +"Home/ThreeDResultSuccess";
-            request.FailUrl = Request.Url+"Home/ThreeDResultFail";
+            request.SuccessUrl = Request.Url + "Home/ThreeDResultSuccess";
+            request.FailUrl = Request.Url + "Home/ThreeDResultFail";
 
             var form = ThreeDPaymentInitRequest.Execute(request, settings);
             System.Web.HttpContext.Current.Response.Clear();
@@ -124,7 +124,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
                 request.Purchaser = new Purchaser();
                 request.Purchaser.BirthDate = "1986-07-11";
                 request.Purchaser.GsmPhone = "5881231212";
-                request.Purchaser.IdentityNumber = "1234567890";             
+                request.Purchaser.IdentityNumber = "1234567890";
                 #endregion
 
                 #region Fatura bilgileri
@@ -178,7 +178,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             {
                 return RedirectToAction("ThreeDResultFail");
             }
-            
+
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             BankCardDeleteResponse response = BankCardDeleteRequest.Execute(request, settings);
             return View(response);
         }
-        
+
         /// <summary>
         /// Ödeme sorgulama sayfasını temsil eder.
         /// </summary>
@@ -340,7 +340,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             PaymentInquiryResponse response = PaymentInquiryRequest.Execute(request, settings);
             return View(response);
         }
-        
+
         /// <summary>
         /// 3D olmadan ödeme sayfasını temsil eder.
         /// </summary>
@@ -361,7 +361,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
         /// <param name="installment"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ApiPayment(string nameSurname, string cardNumber, string cvc, string month, string year,string installment)
+        public ActionResult ApiPayment(string nameSurname, string cardNumber, string cvc, string month, string year, string installment)
         {
             var request = new ApiPaymentRequest();
 
@@ -470,7 +470,7 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             #region Request New
             request.OrderId = Guid.NewGuid().ToString();
             request.Echo = "Echo"; // Cevap anında geri gelecek işlemi ayırt etmeye yarayacak alan
-            request.Mode = settings.Mode; 
+            request.Mode = settings.Mode;
             request.Amount = "10000"; // 100.00 tL
             request.CardOwnerName = "";
             request.CardNumber = "";
@@ -549,5 +549,281 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
             #endregion
         }
 
+        /// <summary>
+        /// Tek adımda 3D ile ödeme 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Api3DPaymentInOneStep()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Tek adımda 3D ile ödeme Post işlemi
+        /// </summary>
+        /// <param name="nameSurname"></param>
+        /// <param name="cardNumber"></param>
+        /// <param name="cvc"></param>
+        /// <param name="month"></param>
+        /// <param name="year"></param>
+        /// <param name="userId"></param>
+        /// <param name="cardId"></param>
+        /// <param name="installment"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Api3DPaymentInOneStep(string nameSurname, string cardNumber, string cvc, string month, string year, string userId, string cardId, string installment)
+        {
+            var request = new Api3DPaymentInOneStepRequest();
+            request.OrderId = Guid.NewGuid().ToString();
+            request.Echo = "Echo";
+            request.Mode = settings.Mode;
+            request.Version = settings.Version;
+            request.Amount = "10000"; // 100 tL
+            request.CardOwnerName = nameSurname;
+            request.CardNumber = cardNumber;
+            request.CardExpireMonth = month;
+            request.CardExpireYear = year;
+            request.Installment = installment;
+            request.Cvc = cvc;
+            request.CardId = cardId;
+            request.UserId = userId;
+
+            request.Language = "tr-TR"; // ext
+            request.Purchaser = new Purchaser
+            {
+                Name = "Murat",
+                SurName = "Kaya",
+                Email = "murat@kaya.com",
+                ClientIp = "127.0.0.1",
+                BirthDate = "1980-07-29"
+            };
+
+            #region Ürün bilgileri
+
+            request.Products = new List<Product>();
+            Product p = new Product();
+            p.Title = "Telefon";
+            p.Code = "TLF0001";
+            p.Price = "5000";
+            p.Quantity = 1;
+            request.Products.Add(p);
+
+            p = new Product();
+            p.Title = "Bilgisayar";
+            p.Code = "BLG0001";
+            p.Price = "5000";
+            p.Quantity = 1;
+            request.Products.Add(p);
+            #endregion
+
+            request.SuccessUrl = Request.Url.Scheme + "://" + Request.Url.Authority + "/Home/Api3DPaymentInOneStepResult";
+            request.FailUrl = Request.Url.Scheme + "://" + Request.Url.Authority + "/Home/Api3DPaymentInOneStepResult";
+
+            var form = Api3DPaymentInOneStepRequest.Execute(request, settings);
+            System.Web.HttpContext.Current.Response.Clear();
+            System.Web.HttpContext.Current.Response.Write(form);
+            System.Web.HttpContext.Current.Response.End();
+
+            return View();
+        }
+
+
+        /// <summary>
+        /// Tek Adımda 3D ödeme sonucu yönlendirilecek sayfayı temsil eder. Başarılı ve başarısız cevaplar için ayrı ayrı sayfalar da oluşturulabilir.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Api3DPaymentInOneStepResult()
+        {
+            Api3DPaymentInOneStepResponse response = new Api3DPaymentInOneStepResponse();
+            response.Result = Request.Form["result"];
+            response.Amount = Request.Form["amount"];
+            response.CommissionRate= Request.Form["commissionRate"];
+            response.PublicKey = Request.Form["publicKey"];
+            response.OrderId = Request.Form["orderId"];
+            response.ErrorCode = Request.Form["errorCode"];
+            response.ErrorMessage = Request.Form["errorMessage"];
+            response.TransactionDate = Request.Form["transactionDate"];
+            response.ThreeDSecureCode = Request.Form["threeDSecureCode"];
+
+            return View(response);
+        }
+
+        /// <summary>
+        /// Link İle Ödeme (Link Gönderim)
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LinkPaymentCreate()
+        {
+            ViewBag.moment = DateTime.Now;
+            return View();
+        }
+
+        /// <summary>
+        /// Link İle Ödeme (Link Gönderim)
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
+        /// <param name="tcCertificate"></param>
+        /// <param name="taxNumber"></param>
+        /// <param name="email"></param>
+        /// <param name="gsm"></param>
+        /// <param name="amount"></param>
+        /// <param name="threeD"></param>
+        /// <param name="day"></param>
+        /// <param name="month"></param>
+        /// <param name="year"></param>
+        /// <param name="installmentList"></param>
+        /// <param name="sendEmail"></param>
+        /// <param name="commissionType"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult LinkPaymentCreate(string name, string surname, string tcCertificate, string taxNumber, string email, string gsm, 
+            string amount, string threeD, string day, string month, string year, string installmentList, string sendEmail, string commissionType)
+        {
+            LinkPaymentCreateRequest request = new LinkPaymentCreateRequest();
+            request.name = name;
+            request.surname = surname;
+            request.tcCertificate = tcCertificate;
+            request.taxNumber = taxNumber;
+            request.email = email;
+            request.gsm = gsm;
+            request.amount = Convert.ToInt32(amount);
+            request.threeD = threeD;
+            request.expireDate = year + "-" + month + "-" + day + " 23:59:59"; // Link girilen günün sonuna kadar geçerli olacak.
+            int[] i = new int[1];
+            i[0] = Convert.ToInt32(installmentList);
+            request.installmentList = i; // Taksit listesi, dizi halinde gönderilebilir. Ödeme için kaç farklı taksit listelenmesi gerekiyorsa burada eklenebilir.
+            request.sendEmail = sendEmail;
+            request.commissionType = commissionType;
+            request.clientIp = "127.0.0.1";
+            LinkPaymentCreateResponse response = LinkPaymentCreateRequest.Execute(request, settings);
+            ViewBag.moment = DateTime.Now;
+
+            return View(response);
+        }
+
+        /// <summary>
+        /// Link İle Ödeme (Link Sorgulama/Listeleme)
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LinkPaymentList()
+        {
+            ViewBag.moment = DateTime.Now;
+            return View();
+        }
+
+        /// <summary>
+        /// Link İle Ödeme (Link Sorgulama/Listeleme)
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="gsm"></param>
+        /// <param name="linkState"></param>
+        /// <param name="startDay"></param>
+        /// <param name="startMonth"></param>
+        /// <param name="startYear"></param>
+        /// <param name="endDay"></param>
+        /// <param name="endMonth"></param>
+        /// <param name="endYear"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult LinkPaymentList(string email, string gsm, string linkState, string startDay, string startMonth, string startYear, string endDay, string endMonth, string endYear, string pageSize, string pageIndex)
+        {
+            LinkPaymentListRequest request = new LinkPaymentListRequest();
+            request.email = email;
+            request.gsm = gsm;
+            request.linkState = linkState != "-1" ? linkState : null;
+            if (!String.IsNullOrEmpty(startDay)) { // Eğer başlangıç tarihi girildiyse, bitiş tarihi de girilmelidir.
+                request.startDate = startYear + "-" + startMonth + "-" + startDay + " 00:00:00";
+                request.endDate = endYear + "-" + endMonth + "-" + endDay + " 23:59:59";
+            } else
+            {
+                request.startDate = null;
+                request.endDate = null;
+            }
+            
+            
+            request.pageSize = pageSize;
+            request.pageIndex = pageIndex;
+            request.clientIp = "127.0.0.1";
+
+            LinkPaymentListResponse response = LinkPaymentListRequest.Execute(request, settings);
+            ViewBag.moment = DateTime.Now;
+
+            return View(response);
+        }
+
+        /// <summary>
+        /// Link İle Ödeme (Link Silme)
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LinkPaymentDelete()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Link İle Ödeme (Link Silme)
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult LinkPaymentDelete(string linkId)
+        {
+            LinkPaymentDeleteRequest request = new LinkPaymentDeleteRequest();
+            request.linkId = linkId;
+            request.clientIp = "127.0.0.1";
+
+            BaseResponse response = LinkPaymentDeleteRequest.Execute(request, settings);
+            return View(response);
+        }
+
+        /// <summary>
+        /// Cüzdandaki Karti ile 3D Ödeme 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Api3DPaymentWithWallet()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Cüzdandaki Kart ile 3D Ödeme Post işlemi
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="cardId"></param>
+        /// <param name="installment"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Api3DPaymentWithWallet(string userId, string cardId, string installment)
+        {
+            //3d iki aşamalı bir işlemdir. İlk adımda 3D güvenlik sorgulaması yapılmalıdır. 
+
+            var request = new ThreeDPaymentInitRequest();
+            request.OrderId = Guid.NewGuid().ToString();
+            request.Echo = "Echo";
+            request.Mode = settings.Mode;
+            request.Version = settings.Version;
+            request.Amount = "10000"; // 100 tL
+            request.Installment = installment;
+            request.CardId = cardId;
+            request.UserId = userId;
+
+
+            request.PurchaserName = "Murat";
+            request.PurchaserSurname = "Kaya";
+            request.PurchaserEmail = "murat@kaya.com";
+
+            request.SuccessUrl = Request.Url.Scheme + "://" + Request.Url.Authority + "/Home/ThreeDResultSuccess";
+            request.FailUrl = Request.Url.Scheme + "://" + Request.Url.Authority + "/Home/ThreeDResultFail";
+
+            var form = ThreeDPaymentInitRequest.Execute(request, settings);
+            System.Web.HttpContext.Current.Response.Clear();
+            System.Web.HttpContext.Current.Response.Write(form);
+            System.Web.HttpContext.Current.Response.End();
+
+            return View();
+        }
     }
 }
+

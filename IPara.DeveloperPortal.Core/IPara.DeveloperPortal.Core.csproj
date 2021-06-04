@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,11 +53,20 @@
     <Compile Include="Base.cs" />
     <Compile Include="Entity\BankCard.cs" />
     <Compile Include="Entity\IparaAuth.cs" />
+    <Compile Include="Entity\PaymentLink.cs" />
     <Compile Include="Entity\Product.cs" />
     <Compile Include="Entity\Purchaser.cs" />
     <Compile Include="Entity\PurchaserAddress.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="JsonBuilder.cs" />
+    <Compile Include="Request\LinkPaymentDeleteRequest.cs" />
+    <Compile Include="Request\LinkPaymentListRequest.cs" />
+    <Compile Include="Request\LinkPaymentCreateRequest.cs" />
+    <Compile Include="Request\Api3DPaymentInOneStepRequest.cs" />
+    <Compile Include="Response\LinkPaymentDeletetResponse.cs" />
+    <Compile Include="Response\LinkPaymentListResponse.cs" />
+    <Compile Include="Response\LinkPaymentCreateResponse.cs" />
+    <Compile Include="Response\Api3DPaymentInOneStepResponse.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request\ThreeDPaymentCompleteRequest.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,7 +16,8 @@ namespace IPara.DeveloperPortal.Core.Entity
     {
         [XmlElement("name")]
         public string Name { get; set; }
-
+        
+        [JsonProperty("surname")]
         [XmlElement("surname")]
         public string SurName { get; set; }
 
