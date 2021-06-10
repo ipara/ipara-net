@@ -14,22 +14,26 @@ namespace IPara.DeveloperPortal.Core.Response
     public class BinNumberInquiryResponse : BaseResponse
     {
 
-        public string bankId { get; set; }
+        public int bankId { get; set; }
         public string bankName { get; set; }
-
+        public int bankFamilyId { get; set; }
         public string cardFamilyName { get; set; }
 
-        public string supportsInstallment { get; set; }
-        public List<string> supportedInstallments { get; set; }
-        public string type { get; set; }
+        public int supportsInstallment { get; set; }
+        public List<int> supportedInstallments { get; set; }
 
-        public string serviceProvider { get; set; }
+        public List<RequiredAmount> installmentDetail { get; set; }
+        public int type { get; set; }
 
-        public string cardThreeDSecureMandatory { get; set; }
-        public string merchantThreeDSecureMandatory { get; set; }
-        public string cvcMandatory { get; set; }
+        public int serviceProvider { get; set; }
 
-        public string businessCard { get; set; }
+        public int cardThreeDSecureMandatory { get; set; }
+        public int merchantThreeDSecureMandatory { get; set; }
+        public int cvcMandatory { get; set; }
+
+        public int businessCard { get; set; }
+
+        public int supportsAgriculture { get; set; }
     }
 
 }

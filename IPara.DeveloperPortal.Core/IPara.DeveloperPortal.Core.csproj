@@ -57,6 +57,7 @@
     <Compile Include="Entity\Product.cs" />
     <Compile Include="Entity\Purchaser.cs" />
     <Compile Include="Entity\PurchaserAddress.cs" />
+    <Compile Include="Entity\RequiredAmount.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="JsonBuilder.cs" />
     <Compile Include="Request\LinkPaymentDeleteRequest.cs" />

@@ -225,6 +225,8 @@ namespace IPara.DeveloperPortal.WebSamples.Controllers
         {
             BinNumberInquiryRequest request = new BinNumberInquiryRequest();
             request.binNumber = binNumber;
+            request.amount = "10000"; /// 100TL
+            request.threeD = true;
             BinNumberInquiryResponse response = BinNumberInquiryRequest.Execute(request, settings);
             return View(response);
         }

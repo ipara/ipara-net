@@ -15,6 +15,10 @@ namespace IPara.DeveloperPortal.Core.Request
         /// </summary>
         public string binNumber { get; set; }
 
+        public string amount { get; set; }
+
+        public bool threeD { get; set; }
+
         /// <summary>
         /// Türkiye genelinde tanımlı olan tüm yerli kartlara ait BIN numaraları için sorgulama yapılmasına izin veren servisi temsil eder. 
         /// </summary>
@@ -25,7 +29,7 @@ namespace IPara.DeveloperPortal.Core.Request
         {
             options.TransactionDate = Helper.GetTransactionDateString();
             options.HashString = options.PrivateKey + request.binNumber + options.TransactionDate;
-            return RestHttpCaller.Create().PostJson<BinNumberInquiryResponse>(options.BaseUrl + "rest/payment/bin/lookup", Helper.GetHttpHeaders( options, Helper.application_json), request);
+            return RestHttpCaller.Create().PostJson<BinNumberInquiryResponse>(options.BaseUrl + "rest/payment/bin/lookup/v2", Helper.GetHttpHeaders( options, Helper.application_json), request);
         }
     }
 
